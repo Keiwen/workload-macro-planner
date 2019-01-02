@@ -1,6 +1,6 @@
 # workload-macro-planner
 
-> Workload macro planning in project management
+> Workload macro planning for project management
 
 ## Build Setup
 

@@ -1,7 +1,7 @@
 {
-  "name": "project-macro-planner",
+  "name": "workload-macro-planner",
   "version": "0.1.0",
-  "description": "Project macro planning",
+  "description": "Workload macro planning for project management",
   "author": "Keiwen <keiwen.mk@gmail.com>",
   "private": true,
   "scripts": {
