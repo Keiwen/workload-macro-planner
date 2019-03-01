@@ -2,6 +2,10 @@
 
 > Workload macro planning for project management
 
+Version 0.1
+
+Working time report: 8 h
+
 ## Build Setup
 
 ``` bash

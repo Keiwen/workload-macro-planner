@@ -6,10 +6,15 @@ const path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/index.html'),
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    //replace dist by docs to generate github page
+    index: path.resolve(__dirname, '../docs/index.html'),
+    //replace dist by docs to generate github page
+    assetsRoot: path.resolve(__dirname, '../docs'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    //replace / by /workload-macro-planner/ to generate github page
+    //wanna try locally? get your local path instead, like /C:/nodejs/projects/workload-macro-planner/docs/
+    //then open index.html in a web browser
+    assetsPublicPath: '/workload-macro-planner/',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
