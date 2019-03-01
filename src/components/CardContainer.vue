@@ -19,7 +19,7 @@ export default {
   computed: {
     cards: {
       get () {
-        return this.$store.state.cards
+        return this.$store.getters.currentProject.cards
       },
       set (reorderedCards) {
         this.$store.commit(storeMut.REORDER_CARDS, reorderedCards)

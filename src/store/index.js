@@ -24,28 +24,52 @@ const defaultResource = {
   capacity: 0
 }
 
+const defaultProject = {
+  id: 0,
+  name: 'Project',
+  nextCardId: 1,
+  lastCardChanged: 0,
+  cards: [],
+  nextResourceId: 1,
+  lastResourceChanged: 0,
+  resources: []
+}
+
 export default new Vuex.Store({
   state: {
-    nextCardId: 1,
-    lastCardChanged: 0,
-    cards: [
-    ],
-    nextResourceId: 1,
-    lastResourceChanged: 0,
-    resources: [
+    nextProjectId: 1,
+    lastProjectChanged: 0,
+    currentProjectId: 0,
+    projects: [
+      JSON.parse(JSON.stringify(defaultProject))
     ]
   },
   getters: {
-    cards: state => state.cards,
+    projects: state => state.projects,
+    getDefaultProjects: state => () => JSON.parse(JSON.stringify(defaultProject)),
+    currentProject: state => {
+      let list = state.projects.filter(project => { return project['id'] === state.currentProjectId })
+      if (list.length > 0) return list[0]
+      return {}
+    },
+    cards: (state, getters) => getters.currentProject.cards,
     getDefaultCard: state => () => JSON.parse(JSON.stringify(defaultCard)),
-    resources: state => state.resources,
+    resources: (state, getters) => getters.currentProject.resources,
     getDefaultResource: state => () => JSON.parse(JSON.stringify(defaultResource))
   },
   mutations: {
     [types.SET_CARD] (state, cardData) {
       if (cardData.id === undefined) cardData.id = 0
+      let projectIndex = -1
+      state.projects.forEach((project, index) => {
+        if (project.id === state.currentProjectId) {
+          projectIndex = index
+        }
+      })
+      if (projectIndex < 0) return
+      let currentProject = state.projects[projectIndex]
       let cardIndex = -1
-      state.cards.forEach((card, index) => {
+      currentProject.cards.forEach((card, index) => {
         if (card.id === cardData.id) {
           cardIndex = index
         }
@@ -54,31 +78,55 @@ export default new Vuex.Store({
 
       if (cardIndex >= 0) {
         // update
-        state.cards[cardIndex] = cardData
+        currentProject.cards[cardIndex] = cardData
       } else {
         // create
-        cardData.id = state.nextCardId
-        state.nextCardId++
-        state.cards.push(cardData)
+        cardData.id = currentProject.nextCardId
+        currentProject.nextCardId++
+        currentProject.cards.push(cardData)
       }
-      state.lastCardChanged = cardData.id
+      currentProject.lastCardChanged = cardData.id
     },
     [types.REMOVE_CARD] (state, id) {
-      state.cards.forEach((card, index, array) => {
+      let projectIndex = -1
+      state.projects.forEach((project, index) => {
+        if (project.id === state.currentProjectId) {
+          projectIndex = index
+        }
+      })
+      if (projectIndex < 0) return
+      let currentProject = state.projects[projectIndex]
+      currentProject.cards.forEach((card, index, array) => {
         if (card.id === id) {
           array.splice(index, 1)
         }
       })
-      state.lastDeckChanged = id
+      currentProject.lastDeckChanged = id
     },
     [types.REORDER_CARDS] (state, reorderedCards) {
-      state.cards = reorderedCards
+      let projectIndex = -1
+      state.projects.forEach((project, index) => {
+        if (project.id === state.currentProjectId) {
+          projectIndex = index
+        }
+      })
+      if (projectIndex < 0) return
+      let currentProject = state.projects[projectIndex]
+      currentProject.cards = reorderedCards
     },
 
     [types.SET_RESOURCE] (state, resourceData) {
       if (resourceData.id === undefined) resourceData.id = 0
+      let projectIndex = -1
+      state.projects.forEach((project, index) => {
+        if (project.id === state.currentProjectId) {
+          projectIndex = index
+        }
+      })
+      if (projectIndex < 0) return
+      let currentProject = state.projects[projectIndex]
       let resourceIndex = -1
-      state.resources.forEach((resource, index) => {
+      currentProject.resources.forEach((resource, index) => {
         if (resource.id === resourceData.id) {
           resourceIndex = index
         }
@@ -87,22 +135,30 @@ export default new Vuex.Store({
 
       if (resourceIndex >= 0) {
         // update
-        state.resources[resourceIndex] = resourceData
+        currentProject.resources[resourceIndex] = resourceData
       } else {
         // create
-        resourceData.id = state.nextResourceId
-        state.nextResourceId++
-        state.resources.push(resourceData)
+        resourceData.id = currentProject.nextResourceId
+        currentProject.nextResourceId++
+        currentProject.resources.push(resourceData)
       }
-      state.lastResourceChanged = resourceData.id
+      currentProject.lastResourceChanged = resourceData.id
     },
     [types.REMOVE_RESOURCE] (state, id) {
-      state.resources.forEach((resource, index, array) => {
+      let projectIndex = -1
+      state.projects.forEach((project, index) => {
+        if (project.id === state.currentProjectId) {
+          projectIndex = index
+        }
+      })
+      if (projectIndex < 0) return
+      let currentProject = state.projects[projectIndex]
+      currentProject.resources.forEach((resource, index, array) => {
         if (resource.id === id) {
           array.splice(index, 1)
         }
       })
-      state.lastResourceChanged = id
+      currentProject.lastResourceChanged = id
     }
   },
   strict: debug,
