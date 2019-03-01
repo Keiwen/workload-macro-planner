@@ -1,0 +1,5 @@
+export const SET_CARD = 'SET_CARD'
+export const REMOVE_CARD = 'REMOVE_CARD'
+export const REORDER_CARDS = 'REORDER_CARDS'
+export const SET_RESOURCE = 'SET_RESOURCE'
+export const REMOVE_RESOURCE = 'REMOVE_RESOURCE'
