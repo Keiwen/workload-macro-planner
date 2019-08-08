@@ -2,16 +2,16 @@
   <div class="card col-sm-6 text-center">
       <div class="row">
           <div class="col-3">
-              <div class="card-side ddHandle btn btn-outline-primary">
+              <div class="card-side card-handle ddHandle btn btn-outline-primary">
                   <icon name="arrows-alt" scale="1.5" />
               </div>
           </div>
           <div class="col-6 card-body">
-              <p>{{card.name}}</p>
+              <div>{{card.name}}</div>
           </div>
           <div class="col-3">
               <router-link :to="{ name: 'edit-card', params: {card: card} }"
-                           class="card-side card-workload btn btn-outline-primary">
+                           class="card-side card-edit card-workload btn btn-outline-primary">
                   {{card.workload}}
               </router-link>
           </div>
@@ -38,6 +38,8 @@ export default {
         border-radius: 25px;
         height: 55px;
         .card-side {
+            position: absolute;
+            top: 0;
             width: 55px;
             height: 55px;
             border-radius: 25px;
@@ -46,7 +48,18 @@ export default {
             }
         }
         .card-body {
-            padding: 0 5px;
+            padding: 2px 5px;
+            height: 51px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card-handle {
+            left: 0;
+        }
+        .card-edit {
+            right: 0;
+            padding-top: 15px;
         }
     }
 </style>
