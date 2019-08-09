@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import * as storeMut from '@/store/mutation-types'
+import { mapActions } from 'vuex'
 import Card from './Card'
 
 export default {
@@ -22,9 +22,12 @@ export default {
         return this.$store.getters.currentProject.cards
       },
       set (reorderedCards) {
-        this.$store.commit(storeMut.REORDER_CARDS, reorderedCards)
+        this.reorderCard(reorderedCards)
       }
     }
+  },
+  methods: {
+    ...mapActions(['reorderCard'])
   }
 }
 </script>

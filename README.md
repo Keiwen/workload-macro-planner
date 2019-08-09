@@ -4,7 +4,7 @@
 
 Version 0.1
 
-Working time report: 9 h
+Working time report: 13 h
 
 ## Build Setup
 

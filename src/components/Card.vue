@@ -20,8 +20,6 @@
 </template>
 
 <script>
-// import * as storeMut from '@/store/mutation-types'
-
 export default {
   name: 'card',
   props: ['card'],

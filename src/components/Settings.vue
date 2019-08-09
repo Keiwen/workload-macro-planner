@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import * as storeMut from '@/store/mutation-types'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'settings',
@@ -24,25 +23,26 @@ export default {
     ...mapGetters(['getDefaultResource', 'getDefaultCard'])
   },
   methods: {
+    ...mapActions(['setCard', 'setResource']),
     devData () {
       let resource = {}
       resource = this.getDefaultResource()
       resource.name = 'Paul'; resource.capacity = 10
-      this.$store.commit(storeMut.SET_RESOURCE, resource)
+      this.setResource(resource)
       resource = this.getDefaultResource()
       resource.name = 'Arthur'; resource.capacity = 15
-      this.$store.commit(storeMut.SET_RESOURCE, resource)
+      this.setResource(resource)
 
       let card = {}
       card = this.getDefaultCard()
       card.name = 'For Emily'; card.workload = 10
-      this.$store.commit(storeMut.SET_CARD, card)
+      this.setCard(card)
       card = this.getDefaultCard()
       card.name = 'The Boxer'; card.workload = 5
-      this.$store.commit(storeMut.SET_CARD, card)
+      this.setCard(card)
       card = this.getDefaultCard()
       card.name = 'Scarborough Fair'; card.workload = 3
-      this.$store.commit(storeMut.SET_CARD, card)
+      this.setCard(card)
 
       this.$router.push({name: 'mainpage'})
     },

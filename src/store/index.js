@@ -46,119 +46,152 @@ export default new Vuex.Store({
   },
   getters: {
     projects: state => state.projects,
-    getDefaultProjects: state => () => JSON.parse(JSON.stringify(defaultProject)),
-    currentProject: state => {
-      let list = state.projects.filter(project => { return project['id'] === state.currentProjectId })
-      if (list.length > 0) return list[0]
-      return {}
+    getDefaultProject: state => () => JSON.parse(JSON.stringify(defaultProject)),
+    getProjectIndex: state => (projectId) => {
+      if (typeof projectId === 'undefined') projectId = state.currentProjectId
+      for (let i = 0; i < state.projects.length; i++) {
+        const project = state.projects[i]
+        if (project.id === projectId) {
+          return i
+        }
+      }
+      return -1
     },
+    getProject: (state, getters) => (projectId) => {
+      if (typeof projectId === 'undefined') projectId = state.currentProjectId
+      let projectIndex = getters.getProjectIndex(projectId)
+      if (projectIndex < 0) return {}
+      return state.projects[projectIndex]
+    },
+    currentProject: (state, getters) => getters.getProject(),
     cards: (state, getters) => getters.currentProject.cards,
     getDefaultCard: state => () => JSON.parse(JSON.stringify(defaultCard)),
+    getCardIndex: (state, getters) => (cardId, projectId) => {
+      if (typeof projectId === 'undefined') projectId = state.currentProjectId
+      let project = getters.getProject(projectId)
+      if (typeof project.id === 'undefined') return -1
+      for (let i = 0; i < project.cards.length; i++) {
+        const card = project.cards[i]
+        if (card.id === cardId) {
+          return i
+        }
+      }
+      return -1
+    },
+    getCard: (state, getters) => (cardId, projectId) => {
+      if (typeof projectId === 'undefined') projectId = state.currentProjectId
+      let cardIndex = getters.getCardIndex(cardId, projectId)
+      if (cardIndex < 0) return {}
+      let project = getters.getProject(projectId)
+      return project.cards[cardIndex]
+    },
     resources: (state, getters) => getters.currentProject.resources,
-    getDefaultResource: state => () => JSON.parse(JSON.stringify(defaultResource))
+    getDefaultResource: state => () => JSON.parse(JSON.stringify(defaultResource)),
+    getResourceIndex: (state, getters) => (resourceId, projectId) => {
+      if (typeof projectId === 'undefined') projectId = state.currentProjectId
+      let project = getters.getProject(projectId)
+      if (typeof project.id === 'undefined') return -1
+      for (let i = 0; i < project.resources.length; i++) {
+        const resource = project.resources[i]
+        if (resource.id === resourceId) {
+          return i
+        }
+      }
+      return -1
+    },
+    getResource: (state, getters) => (resourceId, projectId) => {
+      if (typeof projectId === 'undefined') projectId = state.currentProjectId
+      let resourceIndex = getters.getResourceIndex(resourceId, projectId)
+      if (resourceIndex < 0) return {}
+      let project = getters.getProject(projectId)
+      return project.resources[resourceIndex]
+    }
   },
-  mutations: {
-    [types.SET_CARD] (state, cardData) {
+  actions: {
+    setCard ({getters, commit}, cardData) {
+      // be sure to have id
       if (cardData.id === undefined) cardData.id = 0
-      let projectIndex = -1
-      state.projects.forEach((project, index) => {
-        if (project.id === state.currentProjectId) {
-          projectIndex = index
-        }
-      })
+      let projectIndex = getters.getProjectIndex()
       if (projectIndex < 0) return
-      let currentProject = state.projects[projectIndex]
-      let cardIndex = -1
-      currentProject.cards.forEach((card, index) => {
-        if (card.id === cardData.id) {
-          cardIndex = index
-        }
-      })
+      let cardIndex = getters.getCardIndex(cardData.id)
+      // be sure to have int in workload
       cardData.workload = parseInt(cardData.workload)
 
-      if (cardIndex >= 0) {
-        // update
-        currentProject.cards[cardIndex] = cardData
-      } else {
-        // create
-        cardData.id = currentProject.nextCardId
-        currentProject.nextCardId++
-        currentProject.cards.push(cardData)
-      }
-      currentProject.lastCardChanged = cardData.id
+      commit(types.SET_CARD, {cardData: cardData, cardIndex: cardIndex, projectIndex: projectIndex})
     },
-    [types.REMOVE_CARD] (state, id) {
-      let projectIndex = -1
-      state.projects.forEach((project, index) => {
-        if (project.id === state.currentProjectId) {
-          projectIndex = index
-        }
-      })
+    removeCard ({getters, commit}, cardId) {
+      let projectIndex = getters.getProjectIndex()
       if (projectIndex < 0) return
-      let currentProject = state.projects[projectIndex]
-      currentProject.cards.forEach((card, index, array) => {
-        if (card.id === id) {
-          array.splice(index, 1)
-        }
-      })
-      currentProject.lastDeckChanged = id
-    },
-    [types.REORDER_CARDS] (state, reorderedCards) {
-      let projectIndex = -1
-      state.projects.forEach((project, index) => {
-        if (project.id === state.currentProjectId) {
-          projectIndex = index
-        }
-      })
-      if (projectIndex < 0) return
-      let currentProject = state.projects[projectIndex]
-      currentProject.cards = reorderedCards
-    },
+      let cardIndex = getters.getCardIndex(cardId)
 
-    [types.SET_RESOURCE] (state, resourceData) {
-      if (resourceData.id === undefined) resourceData.id = 0
-      let projectIndex = -1
-      state.projects.forEach((project, index) => {
-        if (project.id === state.currentProjectId) {
-          projectIndex = index
-        }
-      })
+      commit(types.REMOVE_CARD, {cardId: cardId, cardIndex: cardIndex, projectIndex: projectIndex})
+    },
+    reorderCard ({getters, commit}, cards) {
+      let projectIndex = getters.getProjectIndex()
       if (projectIndex < 0) return
-      let currentProject = state.projects[projectIndex]
-      let resourceIndex = -1
-      currentProject.resources.forEach((resource, index) => {
-        if (resource.id === resourceData.id) {
-          resourceIndex = index
-        }
-      })
+
+      commit(types.CHANGE_CARDS, {cards: cards, projectIndex: projectIndex})
+    },
+    setResource ({getters, commit}, resourceData) {
+      // be sure to have id
+      if (resourceData.id === undefined) resourceData.id = 0
+      let projectIndex = getters.getProjectIndex()
+      if (projectIndex < 0) return
+      let resourceIndex = getters.getResourceIndex(resourceData.id)
+      // be sure to have int in capacity
       resourceData.capacity = parseInt(resourceData.capacity)
 
-      if (resourceIndex >= 0) {
+      commit(types.SET_RESOURCE, {resourceData: resourceData, resourceIndex: resourceIndex, projectIndex: projectIndex})
+    },
+    removeResource ({getters, commit}, resourceId) {
+      let projectIndex = getters.getProjectIndex()
+      if (projectIndex < 0) return
+      let resourceIndex = getters.getResourceIndex(resourceId)
+
+      commit(types.REMOVE_RESOURCE, {resourceId: resourceId, resourceIndex: resourceIndex, projectIndex: projectIndex})
+    }
+  },
+  mutations: {
+    [types.SET_CARD] (state, payload) {
+      let project = state.projects[payload.projectIndex]
+      if (payload.cardIndex >= 0) {
         // update
-        currentProject.resources[resourceIndex] = resourceData
+        project.cards[payload.cardIndex] = payload.cardData
       } else {
         // create
-        resourceData.id = currentProject.nextResourceId
-        currentProject.nextResourceId++
-        currentProject.resources.push(resourceData)
+        payload.cardData.id = project.nextCardId
+        project.nextCardId++
+        project.cards.push(payload.cardData)
       }
-      currentProject.lastResourceChanged = resourceData.id
+      project.lastCardChanged = payload.cardData.id
     },
-    [types.REMOVE_RESOURCE] (state, id) {
-      let projectIndex = -1
-      state.projects.forEach((project, index) => {
-        if (project.id === state.currentProjectId) {
-          projectIndex = index
-        }
-      })
-      if (projectIndex < 0) return
-      let currentProject = state.projects[projectIndex]
-      currentProject.resources.forEach((resource, index, array) => {
-        if (resource.id === id) {
-          array.splice(index, 1)
-        }
-      })
-      currentProject.lastResourceChanged = id
+    [types.REMOVE_CARD] (state, payload) {
+      let project = state.projects[payload.projectIndex]
+      project.cards.splice(payload.cardIndex, 1)
+      project.lastCardChanged = payload.cardId
+    },
+    [types.CHANGE_CARDS] (state, payload) {
+      let project = state.projects[payload.projectIndex]
+      project.cards = payload.cards
+    },
+
+    [types.SET_RESOURCE] (state, payload) {
+      let project = state.projects[payload.projectIndex]
+      if (payload.resourceIndex >= 0) {
+        // update
+        project.resources[payload.resourceIndex] = payload.resourceData
+      } else {
+        // create
+        payload.resourceData.id = project.nextResourceId
+        project.nextResourceId++
+        project.resources.push(payload.resourceData)
+      }
+      project.lastResourceChanged = payload.resourceData.id
+    },
+    [types.REMOVE_RESOURCE] (state, payload) {
+      let project = state.projects[payload.projectIndex]
+      project.resources.splice(payload.resourceIndex, 1)
+      project.lastResourceChanged = payload.resourceId
     }
   },
   strict: debug,

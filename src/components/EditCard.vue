@@ -27,8 +27,7 @@
 </template>
 
 <script>
-import * as storeMut from '@/store/mutation-types'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'edit-card',
@@ -47,15 +46,16 @@ export default {
     this.card = JSON.parse(JSON.stringify(this.card))
   },
   methods: {
+    ...mapActions(['setCard', 'removeCard']),
     confirmEdit () {
-      this.$store.commit(storeMut.SET_CARD, this.card)
+      this.setCard(this.card)
       this.$router.push({name: 'mainpage'})
     },
     cancelEdit () {
       this.$router.push({name: 'mainpage'})
     },
     remove () {
-      this.$store.commit(storeMut.REMOVE_CARD, this.card.id)
+      this.removeCard(this.card.id)
       this.$router.push({name: 'mainpage'})
     }
   }

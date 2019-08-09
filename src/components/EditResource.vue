@@ -27,8 +27,7 @@
 </template>
 
 <script>
-import * as storeMut from '@/store/mutation-types'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'edit-resource',
@@ -47,15 +46,16 @@ export default {
     this.resource = JSON.parse(JSON.stringify(this.resource))
   },
   methods: {
+    ...mapActions(['setResource', 'removeResource']),
     confirmEdit () {
-      this.$store.commit(storeMut.SET_RESOURCE, this.resource)
+      this.setResource(this.resource)
       this.$router.push({name: 'resources'})
     },
     cancelEdit () {
       this.$router.push({name: 'resources'})
     },
     remove () {
-      this.$store.commit(storeMut.REMOVE_RESOURCE, this.resource.id)
+      this.removeResource(this.resource.id)
       this.$router.push({name: 'resources'})
     }
   }
