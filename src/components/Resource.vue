@@ -1,6 +1,6 @@
 <template>
   <div class="resource col-sm-6">
-      <div class="row">
+      <div class="row vertical-align">
           <div class="col-8">
               {{resource.name}}
           </div>
@@ -29,4 +29,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+    .resource .row {
+        height: 42px;
+    }
 </style>

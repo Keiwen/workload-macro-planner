@@ -10,6 +10,9 @@
             <div class="col-4">
             </div>
             <div class="col-4">
+                <router-link :to="{ name: 'edit-project' }" class="btn btn-outline-primary">
+                    <icon name="plus" />
+                </router-link>
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
                   <icon name="arrows-alt" scale="1.5" />
               </div>
           </div>
-          <div class="col-6 card-body">
+          <div class="col-6 card-body vertical-align">
               <div>{{card.name}}</div>
           </div>
           <div class="col-3">
@@ -46,11 +46,7 @@ export default {
             }
         }
         .card-body {
-            padding: 2px 5px;
             height: 51px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
         .card-handle {
             left: 0;

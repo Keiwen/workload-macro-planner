@@ -165,6 +165,12 @@ export default new Vuex.Store({
       let projectIndex = getters.getProjectIndex(projectId)
 
       commit(types.REMOVE_PROJECT, {projectId: projectId, projectIndex: projectIndex})
+    },
+    pickProject ({getters, commit}, projectId) {
+      let projectIndex = getters.getProjectIndex(projectId)
+      if (projectIndex < 0) return
+
+      commit(types.PICK_PROJECT, projectId)
     }
   },
   mutations: {
@@ -234,6 +240,9 @@ export default new Vuex.Store({
         state.currentProjectId = 1
       }
       state.lastProjectChanged = payload.projectId
+    },
+    [types.PICK_PROJECT] (state, projectId) {
+      state.currentProjectId = projectId
     }
   },
   strict: debug,

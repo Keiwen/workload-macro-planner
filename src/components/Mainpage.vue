@@ -19,7 +19,7 @@
           </router-link>
         </div>
         <div class="col-6">
-          <router-link :to="{ name: 'projects' }" class="main-project">
+          <router-link :to="{ name: 'projects' }" class="main-project vertical-align">
             {{ currentProject.name }}
           </router-link>
         </div>
@@ -85,11 +85,14 @@ export default {
     }
   }
 
+  .vertical-align {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  }
+
   .main-project {
     padding: 2px 0;
     height: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 </style>

@@ -2,12 +2,12 @@
 
 > Workload macro planning for project management
 
-Version 0.2
+Version 0.3
 
 Quick tool comparing resources and tasks workloads.
 [Try it](https://keiwen.github.io/workload-macro-planner/).
 
-Working time report: 15 h
+Working time report: 16 h
 
 ## Build Setup
 
