@@ -7,7 +7,7 @@
     <div class="form-group row">
       <label for="newName" class="control-label col-4 col-md-2">Name:</label>
       <div class="input-group col-8 col-md-10">
-        <input type="text" id="newName" class="form-control"
+        <input type="text" id="newName" class="form-control" maxlength="30"
                v-model="resource.name" @keyup.enter="confirmEdit()"/>
       </div>
     </div>
