@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <button @click="remove()" class="btn btn-danger"><icon name="trash" /> Remove</button>
+    <button @click="remove()" v-if="resource.id" class="btn btn-danger"><icon name="trash" /> Remove</button>
     <button @click="cancelEdit()" class="btn btn-warning"><icon name="times" /> Cancel</button>
     <button @click="confirmEdit()" class="btn btn-success"><icon name="check" /> Save</button>
 
