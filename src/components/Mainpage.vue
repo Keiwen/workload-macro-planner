@@ -19,7 +19,9 @@
           </router-link>
         </div>
         <div class="col-6">
-          Footer
+          <router-link :to="{ name: 'projects' }" class="main-project">
+            {{ currentProject.name }}
+          </router-link>
         </div>
         <div class="col-2">
           <router-link :to="{ name: 'edit-card' }" class="btn btn-primary btn-main btn-main-add">
@@ -34,12 +36,16 @@
 <script>
 import Workload from './Workload'
 import CardContainer from './CardContainer'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'mainpage',
   components: {Workload, CardContainer},
   data () {
     return {}
+  },
+  computed: {
+    ...mapGetters(['currentProject'])
   }
 }
 </script>
@@ -77,5 +83,13 @@ export default {
     &.btn-main-resources svg {
       margin-left: -3px;
     }
+  }
+
+  .main-project {
+    padding: 2px 0;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 </style>

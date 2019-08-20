@@ -26,7 +26,7 @@ const defaultResource = {
 
 const defaultProject = {
   id: 0,
-  name: 'Project',
+  name: '',
   nextCardId: 1,
   lastCardChanged: 0,
   cards: [],
@@ -35,13 +35,17 @@ const defaultProject = {
   resources: []
 }
 
+let firstProject = JSON.parse(JSON.stringify(defaultProject))
+firstProject.id = 1
+firstProject.name = 'Project'
+
 export default new Vuex.Store({
   state: {
-    nextProjectId: 1,
+    nextProjectId: 2,
     lastProjectChanged: 0,
-    currentProjectId: 0,
+    currentProjectId: 1,
     projects: [
-      JSON.parse(JSON.stringify(defaultProject))
+      JSON.parse(JSON.stringify(firstProject))
     ]
   },
   getters: {
@@ -149,6 +153,18 @@ export default new Vuex.Store({
       let resourceIndex = getters.getResourceIndex(resourceId)
 
       commit(types.REMOVE_RESOURCE, {resourceId: resourceId, resourceIndex: resourceIndex, projectIndex: projectIndex})
+    },
+    setProject ({getters, commit}, projectData) {
+      // be sure to have id
+      if (projectData.id === undefined) projectData.id = 0
+      let projectIndex = getters.getProjectIndex(projectData.id)
+
+      commit(types.SET_PROJECT, {projectData: projectData, projectIndex: projectIndex})
+    },
+    removeProject ({getters, commit}, projectId) {
+      let projectIndex = getters.getProjectIndex(projectId)
+
+      commit(types.REMOVE_PROJECT, {projectId: projectId, projectIndex: projectIndex})
     }
   },
   mutations: {
@@ -192,6 +208,32 @@ export default new Vuex.Store({
       let project = state.projects[payload.projectIndex]
       project.resources.splice(payload.resourceIndex, 1)
       project.lastResourceChanged = payload.resourceId
+    },
+
+    [types.SET_PROJECT] (state, payload) {
+      if (payload.projectIndex >= 0) {
+        // update
+        state.projects[payload.projectIndex].name = payload.projectData.name
+        state.lastProjectChanged = payload.projectData.id
+      } else {
+        // create
+        let project = JSON.parse(JSON.stringify(defaultProject))
+        project.name = payload.projectData.name
+        project.id = state.nextProjectId
+        state.nextProjectId++
+        state.projects.push(project)
+        // new project set as current
+        state.currentProjectId = project.id
+        state.lastProjectChanged = project.id
+      }
+    },
+    [types.REMOVE_PROJECT] (state, payload) {
+      state.projects.splice(payload.projectIndex, 1)
+      // if removed is the current one, set back the first project
+      if (state.currentProjectId === payload.projectId) {
+        state.currentProjectId = 1
+      }
+      state.lastProjectChanged = payload.projectId
     }
   },
   strict: debug,
