@@ -30,7 +30,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'edit-resource',
+  name: 'resource-edit',
   components: {},
   data () {
     return {

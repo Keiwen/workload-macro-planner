@@ -30,7 +30,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'edit-card',
+  name: 'card-edit',
   components: {},
   data () {
     return {

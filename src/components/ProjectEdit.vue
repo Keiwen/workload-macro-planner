@@ -23,7 +23,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'edit-project',
+  name: 'project-edit',
   components: {},
   data () {
     return {

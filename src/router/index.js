@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Mainpage from '@/components/Mainpage'
-import EditCard from '@/components/EditCard'
-import EditResource from '@/components/EditResource'
+import CardEdit from '@/components/CardEdit'
+import ResourceEdit from '@/components/ResourceEdit'
 import ResourceContainer from '@/components/ResourceContainer'
-import EditProject from '@/components/EditProject'
+import ProjectEdit from '@/components/ProjectEdit'
 import ProjectContainer from '@/components/ProjectContainer'
 import Settings from '@/components/Settings'
 
@@ -20,7 +20,7 @@ export default new Router({
     {
       path: '/edit-card',
       name: 'edit-card',
-      component: EditCard
+      component: CardEdit
     },
     {
       path: '/resources',
@@ -30,7 +30,7 @@ export default new Router({
     {
       path: '/edit-resource',
       name: 'edit-resource',
-      component: EditResource
+      component: ResourceEdit
     },
     {
       path: '/projects',
@@ -40,7 +40,7 @@ export default new Router({
     {
       path: '/edit-project',
       name: 'edit-project',
-      component: EditProject
+      component: ProjectEdit
     },
     {
       path: '/settings',
