@@ -2,15 +2,15 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from '../../node_modules/vuex/dist/logger'
 import * as types from './mutation-types'
-// import persistedState from 'vuex-persistedstate'
+import persistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
-// const persistOptions = {
-//   key: 'keiwen-wmp'
-// }
+const persistOptions = {
+  key: 'keiwen-wmp'
+}
 
 const cardColors = [
   '#FFFFFF',
@@ -263,6 +263,5 @@ export default new Vuex.Store({
     }
   },
   strict: debug,
-  // plugins: debug ? [createLogger(), persistedState(persistOptions)] : [persistedState(persistOptions)]
-  plugins: debug ? [createLogger()] : []
+  plugins: debug ? [createLogger(), persistedState(persistOptions)] : [persistedState(persistOptions)]
 })
