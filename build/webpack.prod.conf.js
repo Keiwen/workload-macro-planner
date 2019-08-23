@@ -100,11 +100,13 @@ const webpackConfig = merge(baseWebpackConfig, {
     ]),
     // service worker caching
     new SWPrecacheWebpackPlugin({
-      cacheId: 'project-macro-planner',
+      cacheId: 'workload-macro-planner',
       filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css}'],
+      // change dist to docs to use it in github environment
+      staticFileGlobs: ['docs/**/*.{js,html,css}'],
       minify: true,
-      stripPrefix: 'dist/'
+      // change dist to docs to use it in github environment
+      stripPrefix: 'docs/'
     })
   ]
 })
