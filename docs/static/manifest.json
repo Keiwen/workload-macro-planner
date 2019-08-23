@@ -3,28 +3,28 @@
   "short_name": "WMP",
   "icons": [
     {
-      "src": "workload-macro-planner/static/img/icons/wmp-icon-64x64.png",
+      "src": "/workload-macro-planner/static/img/icons/wmp-icon-64x64.png",
       "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "workload-macro-planner/static/img/icons/wmp-icon-128x128.png",
+      "src": "/workload-macro-planner/static/img/icons/wmp-icon-128x128.png",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "workload-macro-planner/static/img/icons/android-chrome-192x192.png",
+      "src": "/workload-macro-planner/static/img/icons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "workload-macro-planner/static/img/icons/android-chrome-512x512.png",
+      "src": "/workload-macro-planner/static/img/icons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "start_url": "/workload-macro-planner/",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#87713A"
