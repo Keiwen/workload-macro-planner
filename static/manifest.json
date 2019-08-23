@@ -1,7 +1,17 @@
 {
-  "name": "project-macro-planner",
-  "short_name": "PMP",
+  "name": "workload-macro-planner",
+  "short_name": "WMP",
   "icons": [
+    {
+      "src": "/static/img/icons/wmp-icon-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icons/wmp-icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
       "sizes": "192x192",
@@ -13,8 +23,9 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
-  "display": "standalone",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "portrait",
   "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "theme_color": "#87713A"
 }
