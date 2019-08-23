@@ -12,9 +12,25 @@ const debug = process.env.NODE_ENV !== 'production'
 //   key: 'keiwen-wmp'
 // }
 
+const cardColors = [
+  '#FFFFFF',
+  '#F3958D',
+  '#FCCE48',
+  '#FFF79A',
+  '#D9FFAE',
+  '#BFFFF0',
+  '#CFF1F8',
+  '#CBDDFB',
+  '#E5CBFC',
+  '#FDE0F0',
+  '#EFDCC7',
+  '#EAEBEE'
+]
+
 const defaultCard = {
   id: 0,
   name: '',
+  color: cardColors[0],
   workload: 0
 }
 
@@ -89,6 +105,7 @@ export default new Vuex.Store({
       let project = getters.getProject(projectId)
       return project.cards[cardIndex]
     },
+    cardColors: state => cardColors,
     resources: (state, getters) => getters.currentProject.resources,
     getDefaultResource: state => () => JSON.parse(JSON.stringify(defaultResource)),
     getResourceIndex: (state, getters) => (resourceId, projectId) => {

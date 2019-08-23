@@ -18,6 +18,9 @@
                v-model="card.workload" @keyup.enter="confirmEdit()"/>
       </div>
     </div>
+    <div class="form-group row">
+      <card-color-pick @pick-color="pickColor" :current="card.color" />
+    </div>
 
     <button @click="remove()" v-if="card.id" class="btn btn-danger"><icon name="trash" /> Remove</button>
     <button @click="cancelEdit()" class="btn btn-warning"><icon name="times" /> Cancel</button>
@@ -28,17 +31,18 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import CardColorPick from './CardColorPick'
 
 export default {
   name: 'card-edit',
-  components: {},
+  components: { CardColorPick },
   data () {
     return {
       card: {}
     }
   },
   computed: {
-    ...mapGetters(['getDefaultCard'])
+    ...mapGetters(['getDefaultCard', 'cardColors'])
   },
   mounted () {
     this.card = this.$route.params.card
@@ -57,6 +61,9 @@ export default {
     remove () {
       this.removeCard(this.card.id)
       this.$router.push({name: 'mainpage'})
+    },
+    pickColor (pick) {
+      this.card.color = pick
     }
   }
 }

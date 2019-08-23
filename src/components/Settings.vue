@@ -41,7 +41,7 @@ export default {
       card.name = 'The Boxer'; card.workload = 5
       this.setCard(card)
       card = this.getDefaultCard()
-      card.name = 'Scarborough Fair'; card.workload = 3
+      card.name = 'Scarborough Fair'; card.workload = 3; card.color = '#CFF1F8'
       this.setCard(card)
 
       this.$router.push({name: 'mainpage'})

@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-sm-6 text-center">
+  <div class="card col-sm-6 text-center" :style="{'--cardColor': card.color}">
       <div class="row">
           <div class="col-3">
               <div class="card-side card-handle ddHandle btn btn-outline-primary">
@@ -35,6 +35,7 @@ export default {
         margin-bottom: 5px;
         border-radius: 25px;
         height: 55px;
+        background-color: var(--cardColor);
         .card-side {
             position: absolute;
             top: 0;
