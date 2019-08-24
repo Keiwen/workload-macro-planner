@@ -6,7 +6,7 @@ import ResourceEdit from '@/components/ResourceEdit'
 import ResourceContainer from '@/components/ResourceContainer'
 import ProjectEdit from '@/components/ProjectEdit'
 import ProjectContainer from '@/components/ProjectContainer'
-import Settings from '@/components/Settings'
+// import Settings from '@/components/Settings'
 
 Vue.use(Router)
 
@@ -41,11 +41,11 @@ export default new Router({
       path: '/edit-project',
       name: 'edit-project',
       component: ProjectEdit
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      component: Settings
+    // },
+    // {
+    //   path: '/settings',
+    //   name: 'settings',
+    //   component: Settings
     }
   ]
 })
