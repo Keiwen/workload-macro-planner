@@ -8,17 +8,19 @@
     </div>
     <footer class="fixed-bottom">
       <div class="row">
+        <!--
         <div class="col-2">
           <router-link :to="{ name: 'settings' }" class="btn btn-primary btn-main btn-main-settings">
             <icon name="cog" scale="2"/>
           </router-link>
         </div>
+        -->
         <div class="col-2">
           <router-link :to="{ name: 'resources' }" class="btn btn-primary btn-main btn-main-resources">
             <icon name="users" scale="2"/>
           </router-link>
         </div>
-        <div class="col-6">
+        <div class="col-8">
           <router-link :to="{ name: 'projects' }" class="main-project vertical-align">
             {{ currentProject.name }}
           </router-link>
