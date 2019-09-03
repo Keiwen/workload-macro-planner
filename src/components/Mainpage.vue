@@ -20,10 +20,17 @@
             <icon name="users" scale="2"/>
           </router-link>
         </div>
-        <div class="col-8">
+        <div class="col-5">
           <router-link :to="{ name: 'projects' }" class="main-project vertical-align">
             {{ currentProject.name }}
           </router-link>
+        </div>
+        <div class="col-3">
+          <button @click="orderCardsSwitch()" class="btn btn-dark btn-main btn-main-order">
+            <icon v-if="currentProject.order == 'alpha'" name="sort-alpha-down" scale="2"/>
+            <icon v-if="currentProject.order == 'workload'" name="sort-amount-down" scale="2"/>
+            <icon v-if="currentProject.order == 0" name="sort" scale="2"/>
+          </button>
         </div>
         <div class="col-2">
           <router-link :to="{ name: 'edit-card' }" class="btn btn-primary btn-main btn-main-add">
@@ -38,7 +45,7 @@
 <script>
 import Workload from './Workload'
 import CardContainer from './CardContainer'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'mainpage',
@@ -48,6 +55,9 @@ export default {
   },
   computed: {
     ...mapGetters(['currentProject'])
+  },
+  methods: {
+    ...mapActions(['orderCardsSwitch'])
   }
 }
 </script>

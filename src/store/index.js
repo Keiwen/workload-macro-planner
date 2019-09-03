@@ -48,6 +48,7 @@ const defaultProject = {
   cards: [],
   nextResourceId: 1,
   lastResourceChanged: 0,
+  order: 0,
   resources: []
 }
 
@@ -151,7 +152,34 @@ export default new Vuex.Store({
       let projectIndex = getters.getProjectIndex()
       if (projectIndex < 0) return
 
-      commit(types.CHANGE_CARDS, {cards: cards, projectIndex: projectIndex})
+      commit(types.CHANGE_CARDS, {cards: cards, projectIndex: projectIndex, order: 0})
+    },
+    orderCardsBy ({getters, commit}, order) {
+      if (order !== 'workload') order = 'alpha'
+      let projectIndex = getters.getProjectIndex()
+      if (projectIndex < 0) return
+      let cards = JSON.parse(JSON.stringify(getters.cards))
+
+      cards.sort((cardA, cardB) => {
+        switch (order) {
+          case 'workload':
+            return cardB.workload - cardA.workload
+          default:
+            if (cardB.name.toLowerCase() > cardA.name.toLowerCase()) return -1
+            return 1
+        }
+      })
+      commit(types.CHANGE_CARDS, {cards: cards, projectIndex: projectIndex, order: order})
+    },
+    orderCardsSwitch ({getters, dispatch}) {
+      const currentOrder = getters.currentProject.order
+      let newOrder = 'alpha'
+      switch (currentOrder) {
+        case 'alpha':
+          newOrder = 'workload'
+          break
+      }
+      dispatch('orderCardsBy', newOrder)
     },
     setResource ({getters, commit}, resourceData) {
       // be sure to have id
@@ -202,6 +230,7 @@ export default new Vuex.Store({
         project.nextCardId++
         project.cards.push(payload.cardData)
       }
+      project.order = 0
       project.lastCardChanged = payload.cardData.id
     },
     [types.REMOVE_CARD] (state, payload) {
@@ -212,6 +241,7 @@ export default new Vuex.Store({
     [types.CHANGE_CARDS] (state, payload) {
       let project = state.projects[payload.projectIndex]
       project.cards = payload.cards
+      project.order = payload.order
     },
 
     [types.SET_RESOURCE] (state, payload) {
