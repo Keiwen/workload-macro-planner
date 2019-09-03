@@ -8,7 +8,7 @@ Designed as progressive web-app (PWA):
 load demo's page with your smartphone browser,
 you'll be able to install Workload Macro Planner as new app.
 
-Working time report for this project: 20 h
+Working time report for this project: 22 h
 
 
 ## Doc
@@ -22,6 +22,8 @@ You can add task thanks to the "+" button (bottom-right corner).
 Total workload is showed on top on the page,
 compared to resources' capacity,
 where excessive workload is in red.
+
+Tasks can be sorted alphabetically or by workload
 
 ![Card](https://raw.githubusercontent.com/Keiwen/workload-macro-planner/master/samples/small/card.png)
 
