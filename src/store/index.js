@@ -154,7 +154,7 @@ export default new Vuex.Store({
       if (projectIndex < 0) return
       let cardIndex = getters.getCardIndex(cardId)
 
-      commit(types.REMOVE_CARD, {cardId: cardId, cardIndex: cardIndex, projectIndex: projectIndex})
+      commit(types.REMOVE_CARD, {cardIndex: cardIndex, projectIndex: projectIndex})
     },
     reorderCard ({getters, commit}, cards) {
       let projectIndex = getters.getProjectIndex()
@@ -188,6 +188,19 @@ export default new Vuex.Store({
           break
       }
       dispatch('orderCardsBy', newOrder)
+    },
+    moveCard ({getters, commit}, payload) {
+      // be sure to have id
+      if (payload.card.id === undefined) return
+      let fromProjectIndex = getters.getProjectIndex()
+      let toProjectIndex = getters.getProjectIndex(payload.toProjectId)
+      if (fromProjectIndex < 0 || toProjectIndex < 0) return
+      let cardIndex = getters.getCardIndex(payload.card.id)
+      // be sure to have int in workload
+      payload.card.workload = parseInt(payload.card.workload)
+
+      commit(types.SET_CARD, {cardData: payload.card, cardIndex: -1, projectIndex: toProjectIndex})
+      commit(types.REMOVE_CARD, {cardIndex: cardIndex, projectIndex: fromProjectIndex})
     },
     setResource ({getters, commit}, resourceData) {
       // be sure to have id
@@ -249,7 +262,7 @@ export default new Vuex.Store({
     [types.REMOVE_CARD] (state, payload) {
       let project = state.projects[payload.projectIndex]
       project.cards.splice(payload.cardIndex, 1)
-      project.lastCardChanged = payload.cardId
+      project.lastCardChanged = 0
     },
     [types.CHANGE_CARDS] (state, payload) {
       let project = state.projects[payload.projectIndex]
