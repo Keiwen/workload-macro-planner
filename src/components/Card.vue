@@ -6,25 +6,37 @@
                   <icon name="arrows-alt" scale="1.5" />
               </div>
           </div>
-          <div class="col-6 card-body vertical-align">
+          <div class="col-6 card-body vertical-align" @click="gotoEditCard()">
               <div>{{card.name}}</div>
           </div>
           <div class="col-3">
-              <router-link :to="{ name: 'edit-card', params: {card: card} }"
+              <button @click="switchCard()"
                            class="card-side card-edit card-workload btn btn-outline-primary">
-                  {{card.workload}}
-              </router-link>
+                  <icon v-if="card.out" scale="1.5" class="card-out" name="ban" color="red" />
+                  <span v-else>{{card.workload}}</span>
+              </button>
           </div>
       </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'card',
   props: ['card'],
   data () {
     return {}
+  },
+  methods: {
+    ...mapActions(['switchCardInOut']),
+    gotoEditCard () {
+      this.$router.push({name: 'edit-card', params: {card: this.card}})
+    },
+    switchCard () {
+      this.switchCardInOut(this.card.id)
+    }
   }
 }
 </script>
@@ -48,13 +60,14 @@ export default {
         }
         .card-body {
             height: 51px;
+            cursor: pointer;
         }
         .card-handle {
             left: 0;
         }
         .card-edit {
             right: 0;
-            padding-top: 15px;
+            padding-top: 7px;
         }
     }
 </style>

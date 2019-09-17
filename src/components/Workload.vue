@@ -26,6 +26,9 @@ export default {
     },
     totalWorkload () {
       return this.cards.reduce((total, card) => {
+        if (card.out) {
+          return total
+        }
         return total + card.workload
       }, 0)
     },

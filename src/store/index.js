@@ -31,7 +31,8 @@ const defaultCard = {
   id: 0,
   name: '',
   color: cardColors[0],
-  workload: 0
+  workload: 0,
+  out: false
 }
 
 const defaultResource = {
@@ -141,6 +142,13 @@ export default new Vuex.Store({
 
       commit(types.SET_CARD, {cardData: cardData, cardIndex: cardIndex, projectIndex: projectIndex})
     },
+    switchCardInOut ({getters, commit}, cardId) {
+      let projectIndex = getters.getProjectIndex()
+      if (projectIndex < 0) return
+      let cardIndex = getters.getCardIndex(cardId)
+
+      commit(types.SWITCH_CARD, {cardId: cardId, cardIndex: cardIndex, projectIndex: projectIndex})
+    },
     removeCard ({getters, commit}, cardId) {
       let projectIndex = getters.getProjectIndex()
       if (projectIndex < 0) return
@@ -232,6 +240,11 @@ export default new Vuex.Store({
       }
       project.order = 0
       project.lastCardChanged = payload.cardData.id
+    },
+    [types.SWITCH_CARD] (state, payload) {
+      let project = state.projects[payload.projectIndex]
+      project.cards[payload.cardIndex].out = !project.cards[payload.cardIndex].out
+      project.lastCardChanged = payload.cardId
     },
     [types.REMOVE_CARD] (state, payload) {
       let project = state.projects[payload.projectIndex]

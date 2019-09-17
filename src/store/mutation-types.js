@@ -1,4 +1,5 @@
 export const SET_CARD = 'SET_CARD'
+export const SWITCH_CARD = 'SWITCH_CARD'
 export const REMOVE_CARD = 'REMOVE_CARD'
 export const CHANGE_CARDS = 'CHANGE_CARDS'
 export const SET_RESOURCE = 'SET_RESOURCE'
