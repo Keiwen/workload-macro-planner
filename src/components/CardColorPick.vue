@@ -1,13 +1,15 @@
 <template>
-  <div class="row color-pick-container text-center">
+    <div class="container-fluid">
+        <div class="row color-pick-container text-center">
 
-      <div class="col-3" v-for="color in cardColors">
-          <div @click="pickColor(color)" class="color-pick btn btn-default" :style="{'--cardColor': color}">
-              <icon name="check" v-if="current === color" />
-          </div>
-      </div>
+            <div class="col-3" v-for="color in cardColors">
+                <div @click="pickColor(color)" class="color-pick btn btn-default" :style="{'--cardColor': color}">
+                    <icon name="check" v-if="current === color" />
+                </div>
+            </div>
 
-  </div>
+        </div>
+    </div>
 </template>
 
 <script>
