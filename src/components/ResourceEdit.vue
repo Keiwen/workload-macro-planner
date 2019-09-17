@@ -8,6 +8,7 @@
       <label for="newName" class="control-label col-4 col-md-2">Name:</label>
       <div class="input-group col-8 col-md-10">
         <input type="text" id="newName" class="form-control" maxlength="30"
+               ref="inputResourceName"
                v-model="resource.name" @keyup.enter="confirmEdit()"/>
       </div>
     </div>
@@ -44,6 +45,7 @@ export default {
     this.resource = this.$route.params.resource
     if (!this.resource) this.resource = this.getDefaultResource()
     this.resource = JSON.parse(JSON.stringify(this.resource))
+    this.$refs.inputResourceName.focus()
   },
   methods: {
     ...mapActions(['setResource', 'removeResource']),

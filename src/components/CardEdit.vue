@@ -8,6 +8,7 @@
       <label for="newName" class="control-label col-4 col-md-2">Name:</label>
       <div class="input-group col-8 col-md-10">
         <input type="text" id="newName" class="form-control" maxlength="30"
+               ref="inputCardName"
                v-model="card.name" @keyup.enter="confirmEdit()"/>
       </div>
     </div>
@@ -48,6 +49,7 @@ export default {
     this.card = this.$route.params.card
     if (!this.card) this.card = this.getDefaultCard()
     this.card = JSON.parse(JSON.stringify(this.card))
+    this.$refs.inputCardName.focus()
   },
   methods: {
     ...mapActions(['setCard', 'removeCard']),

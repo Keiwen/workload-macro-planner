@@ -8,6 +8,7 @@
       <label for="newName" class="control-label col-4 col-md-2">Name:</label>
       <div class="input-group col-8 col-md-10">
         <input type="text" id="newName" class="form-control" maxlength="18"
+               ref="inputProjectName"
                v-model="project.name" @keyup.enter="confirmEdit()"/>
       </div>
     </div>
@@ -41,6 +42,7 @@ export default {
       this.project.id = this.$route.params.project.id
       this.project.name = this.$route.params.project.name
     }
+    this.$refs.inputProjectName.focus()
   },
   methods: {
     ...mapActions(['setProject', 'removeProject']),
