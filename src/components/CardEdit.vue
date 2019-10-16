@@ -28,7 +28,7 @@
     <button @click="confirmEdit()" class="btn btn-success"><icon name="check" /> Save</button>
 
 
-      <div class="fixed-bottom container-fluid" v-if="card.id">
+      <div class="project-move container-fluid" v-if="card.id">
           <hr/>
           <div class="form-group row">
               <label for="newProject" class="control-label col-4 col-md-2">Move to project:</label>
@@ -91,5 +91,9 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style lang="scss">
+
+    .project-move {
+        margin-top: 50px;
+    }
 </style>
