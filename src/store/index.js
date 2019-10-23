@@ -163,7 +163,6 @@ export default new Vuex.Store({
       commit(types.CHANGE_CARDS, {cards: cards, projectIndex: projectIndex, order: 0})
     },
     orderCardsBy ({getters, commit}, order) {
-      if (order !== 'workload') order = 'alpha'
       let projectIndex = getters.getProjectIndex()
       if (projectIndex < 0) return
       let cards = JSON.parse(JSON.stringify(getters.cards))
@@ -172,7 +171,10 @@ export default new Vuex.Store({
         switch (order) {
           case 'workload':
             return cardB.workload - cardA.workload
+          case 'color':
+            return cardColors.indexOf(cardA.color) - cardColors.indexOf(cardB.color)
           default:
+            order = 'alpha'
             if (cardB.name.toLowerCase() > cardA.name.toLowerCase()) return -1
             return 1
         }
@@ -185,6 +187,9 @@ export default new Vuex.Store({
       switch (currentOrder) {
         case 'alpha':
           newOrder = 'workload'
+          break
+        case 'workload':
+          newOrder = 'color'
           break
       }
       dispatch('orderCardsBy', newOrder)

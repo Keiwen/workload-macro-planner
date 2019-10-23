@@ -28,7 +28,8 @@
         <div class="col-3">
           <button @click="orderCardsSwitch()" class="btn btn-dark btn-main btn-main-order">
             <icon v-if="currentProject.order == 'alpha'" name="sort-alpha-down" scale="2"/>
-            <icon v-if="currentProject.order == 'workload'" name="sort-amount-down" scale="2"/>
+            <icon v-if="currentProject.order == 'workload'" name="sort-numeric-down-alt" scale="2"/>
+            <icon v-if="currentProject.order == 'color'" name="sort-amount-down-alt" scale="2"/>
             <icon v-if="currentProject.order == 0" name="sort" scale="2"/>
           </button>
         </div>
