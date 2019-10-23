@@ -8,7 +8,7 @@ Designed as progressive web-app (PWA):
 load demo's page with your smartphone browser,
 you'll be able to install Workload Macro Planner as new app.
 
-Working time report for this project: 24 h
+Working time report for this project: 25 h
 
 
 ## Doc
