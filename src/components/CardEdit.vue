@@ -64,7 +64,10 @@ export default {
     if (!this.card) this.card = this.getDefaultCard()
     this.card = JSON.parse(JSON.stringify(this.card))
     this.newProject = this.currentProject
-    this.$refs.inputCardName.focus()
+    if (!this.card.id) {
+      // no focus on update, it will open keyboard and hide bottom screen
+      this.$refs.inputCardName.focus()
+    }
   },
   methods: {
     ...mapActions(['setCard', 'removeCard', 'moveCard']),
