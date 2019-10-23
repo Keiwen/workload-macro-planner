@@ -14,7 +14,7 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "sweet-modal-vue": "^2.0.0",
     "vue": "^2.5.2",
-    "vue-awesome": "^3.3.1",
+    "vue-awesome": "^3.5.4",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.17.0",
     "vuex": "^3.0.1",
